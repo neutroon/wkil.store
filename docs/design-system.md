@@ -4,7 +4,7 @@ The contract for every section of the landing page. Tokens live in `src/app/glob
 
 ## 1. Direction
 
-The landing is the admin's public face: the same deep teal, the same ink, the same teal-grey neutrals, the same store icon in a soft teal tile. What marketing adds is voice. Headings are large, set in an Arabic face with real character, and always start at the start edge (right in Arabic), never centred by default. The page is white with one or two full-width ink sections for rhythm. Colour is quiet everywhere except inside product visuals, where the merchant's own shop appears in warm tones (saffron, sand, clay): the platform is cool and calm, the shop it carries is warm. One shape is ours alone, the **order slip** (`Ticket`): an order is what the merchant sells and what they pay for, so the order card and the price are both drawn as one.
+The landing is the admin's public face: the same deep teal, the same ink, the same teal-grey neutrals. The logo is the Wkil family's: the Wkil bubble carrying a shopping bag, between «متجر» and «كيل». What marketing adds is voice. Headings are large, set in an Arabic face with real character, and always start at the start edge (right in Arabic), never centred by default. The page is white with one or two full-width ink sections for rhythm. Colour is quiet everywhere except inside product visuals, where the merchant's own shop appears in warm tones (saffron, sand, clay): the platform is cool and calm, the shop it carries is warm. One shape is ours alone, the **order slip** (`Ticket`): an order is what the merchant sells and what they pay for, so the order card and the price are both drawn as one.
 
 What we don't do: gradients, glows, stock photos, illustrations of people, centred hero text, letter-spaced or upper-case labels, arrows on buttons, a shadow under every card, or a different corner radius per engineer.
 
@@ -115,11 +115,12 @@ No photographs. Every visual is HTML and CSS built from: `Stage` (the backdrop),
 
 ## 7. Motion
 
-CSS only, and all of it is off under `prefers-reduced-motion`.
+CSS only, except the logo's eyes, and all of it is off under `prefers-reduced-motion`.
 
 - **One entrance**: the hero. `animate-rise` (fade and 12px rise, 640ms) with `stagger-0` to `stagger-4` (90ms steps) on heading, lede, actions, note, visual. Nothing else animates on load or on scroll.
 - **Answers to actions**: buttons and links change colour in 150ms and sink 1px when pressed; `Disclosure` turns its plus 45° and, where the browser can, slides open in 260ms.
-- No hover lift on cards, no parallax, no looping animation.
+- **The logo**, as on wkil.app: its eyes blink (a 5.5s CSS loop) and follow the pointer (`BrandLogo`, the one script in the chrome).
+- No hover lift on cards, no parallax, no other looping animation.
 
 ## 8. Primitives
 
@@ -178,7 +179,7 @@ One `primary` per view on light, one `on-ink` per ink section; `secondary` and `
 ```
 
 ### BrandMark
-`locale`, `size?: 'sm' | 'md'`, `link?` (to the locale's home). Name from `src/lib/brand.ts`.
+`locale`, `size?: 'sm' | 'md'`, `link?` (to the locale's home). Draws the animated logo (`BrandLogo`, geometry in `src/lib/logo.ts`), the same in both languages; the name from `src/lib/brand.ts` is read to screen readers. `«كيل»` takes `fg`, `«متجر»` and the bubble take `accent`, and the bag takes the page colour, so it works on white and on ink. Still copies for use elsewhere are in `public/assets/`.
 ```tsx
 <BrandMark locale="ar" link />
 ```
@@ -229,7 +230,7 @@ First child of `<body>` content: `<SkipLink>انتقل للمحتوى</SkipLink>
 
 Order and tone: header, hero (default), steps (muted), feature rows (default), feature grid (muted), pricing (ink), FAQ (default), closing band (ink), footer (ink). Two ink regions: pricing, and the ending.
 
-**Header.** `<header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">` with a `Container` of `h-header` (64px), `flex items-center justify-between gap-6`. Start: `BrandMark link`. Middle, from `lg` only: `nav` of `TextLink quiet` with `gap-7` (how it works, features, pricing, questions). End: the language link (`ButtonLink variant="ghost"`, with `lang` and `hrefLang` of the other language, labelled in that language) and sign in (`ghost`), both wrapped in `hidden sm:block`, then the start button (`primary`, `md`). Below `sm` only the mark and the start button remain; the language link and sign in move to the footer. No menu button, no script.
+**Header.** `<header className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">` with a `Container` of `h-header` (64px), `flex items-center justify-between gap-6`. Start: `BrandMark link`. Middle, from `lg` only: `nav` of `TextLink quiet` with `gap-7` (how it works, features, pricing, questions). End: the language link (`ButtonLink variant="ghost"`, with `lang` and `hrefLang` of the other language, labelled in that language) and sign in (`ghost`), both wrapped in `hidden sm:block`, then the start button (`primary`, `md`). Below `sm` only the logo and the start button remain; the language link and sign in move to the footer. No menu button; the only script is the logo's eyes.
 
 **Hero.** A plain `<section data-tone="default">`, `pt-12 lg:pt-20 pb-section`, `Container` with `grid items-center gap-x-8 gap-y-14 lg:grid-cols-12`. Text in `lg:col-span-7`, start-aligned: `h1.text-display max-w-[13em]`, `p.text-lede.text-fg-muted max-w-[34rem] mt-6`, actions `mt-8 flex flex-wrap gap-3` (primary `lg` then secondary `lg`), one `text-small text-fg-muted` note `mt-5`. Visual in `lg:col-span-5`: a `Stage` (mist) holding a `PhoneFrame` of the storefront, with the order `Ticket` (`w-64`) overlapping its start-bottom corner. No eyebrow, no badge above the heading, no stats row. The entrance sequence of section 7 lives here. Below `lg` the visual follows the text.
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 -5 92 92" role="img" aria-labelledby="title desc">
+  <title id="title">Wkil Store mark</title>
+  <desc id="desc">The Wkil Store mark: the Wkil chat bubble, shaped like the Arabic letter waw, with a winking shopping bag inside.</desc>
+  <path fill="#0b7a6e" d="M48 13C64 13 78 25 80 43C82 60 72 74 56 80C49 83 40 84 30 84C38 80 44 76 48 72C35 71 24 63 21 50C17 33 30 17 48 13Z"/>
+  <path fill="#ffffff" d="M38.6 37.5H61.4Q64.4 37.5 64.8 40.5L67 59.8Q67.5 64.5 62.8 64.5H37.2Q32.5 64.5 33 59.8L35.2 40.5Q35.6 37.5 38.6 37.5Z"/>
+  <path d="M41.5 38.5V34.5A8.5 8.5 0 0 1 58.5 34.5V38.5" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="43.4" cy="51.5" r="4.3" fill="#0b7a6e"/>
+  <path d="M51.6 52.9Q56.3 47.5 61 52.9" fill="none" stroke="#0b7a6e" stroke-width="3.2" stroke-linecap="round"/>
+</svg>

@@ -6,8 +6,9 @@ import { SIGN_IN_URL, SIGN_UP_URL } from '@/lib/site';
 
 /**
  * The sticky header (docs/design-system.md, section 9). The in-page links show from 1024px;
- * the language link and sign-in from 640px. Below that only the mark and the start button
- * remain, and the footer carries the language link and sign-in. No menu button, no script.
+ * the language link and sign-in from 640px. Below that only the logo and the start button
+ * remain, and the footer carries the language link and sign-in. No menu button; the only
+ * script is the logo's eyes (BrandLogo).
  */
 export function SiteHeader({ content, locale }: { content: Content; locale: Locale }) {
   const { nav } = content;
@@ -17,7 +18,7 @@ export function SiteHeader({ content, locale }: { content: Content; locale: Loca
       <SkipLink>{nav.skipToContent}</SkipLink>
       <header data-tone="default" className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
         <Container className="flex h-header items-center justify-between gap-6">
-          <BrandMark locale={locale} link className="max-[359px]:[&>span:last-child]:sr-only" />
+          <BrandMark locale={locale} link />
 
           <nav aria-label={nav.navLabel} className="hidden lg:block">
             <ul className="flex items-center gap-7">
