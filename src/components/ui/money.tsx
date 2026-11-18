@@ -13,7 +13,10 @@ export function formatNumber(value: number): string {
  * English. The space doesn't break, so the two never part at a line end.
  */
 export function formatMoney(amount: number, locale: Locale): string {
-  const n = formatNumber(amount);
+  // Piastres show as two decimals (1.50, not 1.5); whole pounds show none.
+  const n = Number.isInteger(amount)
+    ? formatNumber(amount)
+    : new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
   return locale === 'ar' ? `${n} ${CURRENCY.ar}` : `${CURRENCY.en} ${n}`;
 }
 
