@@ -118,7 +118,7 @@ function LandingVisual({ row, shop, locale }: VisualProps) {
   const offerPrice = visualAmount(row, 'offerPrice');
   return (
     <div className="relative w-full max-w-[34rem]">
-      <BrowserFrame label={t('pageTitle')} url="cottonhouse.wkil.store">
+      <BrowserFrame label={t('pageTitle')} url="cottonhouse.wkil.store/funnels/tshirt">
         <div className="grid gap-4 p-4 sm:grid-cols-2 sm:p-5">
           <ProductSwatch tone="clay" icon={Shirt} className="aspect-[16/9] sm:aspect-square" />
           <div className="flex min-w-0 flex-col gap-3">

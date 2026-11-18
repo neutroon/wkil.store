@@ -61,7 +61,7 @@ function OrderTicket({ shop, locale }: { shop: DemoShop; locale: Locale }) {
             <Banknote className="size-4 shrink-0" />
             <span>{shop.cashOnDelivery}</span>
           </span>
-          <Money amount={shop.productPrice} locale={locale} className="shrink-0 text-subheading font-bold" />
+          <Money amount={shop.productPrice + shop.deliveryPrice} locale={locale} className="shrink-0 text-subheading font-bold" />
         </div>
       }
     >

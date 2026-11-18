@@ -7,7 +7,7 @@ function faqJsonLd(items: Content['faq']['items'], locale: Locale): string {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    inLanguage: locale,
+    inLanguage: locale === 'ar' ? 'ar-EG' : 'en',
     mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.q,

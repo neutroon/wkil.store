@@ -65,6 +65,8 @@ export type Content = {
       productName: string;
       /** Price in pounds of the demo product. */
       productPrice: number;
+      /** Delivery to `governorate`, in pounds: the slip's cash-on-delivery total is the two added. */
+      deliveryPrice: number;
       orderButton: string;
       orderLabel: string;
       governorate: string;

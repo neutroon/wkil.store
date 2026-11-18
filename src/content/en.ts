@@ -13,7 +13,7 @@ export const en: Content = {
   meta: {
     title: 'Wkil Store | Cash-on-delivery stores with no subscription',
     description:
-      'Open an online store in Egypt with no subscription: {perOrder} for each order placed, never more than {cap} a month. Delivery prices and landing pages ready.',
+      'Open an online store in Egypt with no subscription: {perOrder} for each order placed, never more than {cap} a month. Delivery prices for every governorate, ready, and landing pages for your ads.',
     ogTitle: 'Wkil Store: no subscription, you pay when an order comes in',
     ogDescription: '{perOrder} an order, never more than {cap} a month. A store ready for cash on delivery in Egypt.',
   },
@@ -35,7 +35,7 @@ export const en: Content = {
   hero: {
     eyebrow: 'Wkil Store, for merchants in Egypt',
     title: 'No subscription. You pay when an order comes in.',
-    lede: '{perOrder} for each order placed in your store, and never more than {cap} a month, however many orders you get. Your store opens ready for cash on delivery, with a delivery price for every governorate and landing pages for your ads.',
+    lede: '{perOrder} for each order placed in your store, and never more than {cap} a month, however many orders you get. Your store opens ready for cash on delivery, with a delivery price for every governorate, and you can build landing pages for your ads.',
     primaryCta: START,
     secondaryCta: 'Work out your bill',
     note: 'Sign up with a mobile number on WhatsApp. No card, no subscription.',
@@ -43,7 +43,8 @@ export const en: Content = {
       shopName: 'Cotton House',
       productName: 'Plain cotton t-shirt',
       productPrice: 350,
-      orderButton: 'Order now',
+      deliveryPrice: 50,
+      orderButton: 'Add to cart',
       orderLabel: 'Order #1042',
       governorate: 'Giza',
       cashOnDelivery: 'Cash on delivery',
@@ -86,7 +87,7 @@ export const en: Content = {
         points: [
           "A delivery price per governorate; switch off the ones you don't ship to",
           'No delivery charge on orders above an amount you set',
-          'Quantity offers, like two pieces for one price',
+          'Quantity offers, like two pieces for EGP 600',
           'A retried order is never placed twice',
         ],
         visual: {
@@ -98,7 +99,7 @@ export const en: Content = {
           deliveryPrice: '50',
           total: 'Total',
           cod: 'Cash on delivery',
-          placeOrder: 'Place order',
+          placeOrder: 'Order now',
         },
       },
       {
@@ -137,14 +138,14 @@ export const en: Content = {
           whatsapp: 'WhatsApp',
           call: 'Call',
           makeOrder: 'Convert to order',
-          pixelEvent: 'Purchase',
+          pixelEvent: 'InitiateCheckout',
         },
       },
       {
         key: 'assistant',
         eyebrow: 'Connect an AI assistant',
         title: 'Ask your assistant to build the landing page',
-        body: 'If you use an assistant like Claude or ChatGPT, connect it to your store from the Admin Panel and choose what it may do and for how long. Then ask it to add products, build a landing page or update your orders.',
+        body: 'If you use an assistant like Claude or ChatGPT, give it your store\'s MCP address from the Admin Panel, approve it, and choose what it may do and for how long. Then ask it to add products, build a landing page or update your orders.',
         points: [
           'You choose what it may do, and for how long',
           'See every call it made, and disconnect it in one click',
@@ -162,7 +163,7 @@ export const en: Content = {
 
   grid: {
     title: 'And the rest of what you use every day',
-    lede: 'No add-ons to buy and no higher plans: every store gets the same.',
+    lede: 'No higher plans: every store gets the same features.',
     soonLabel: 'Soon',
     items: [
       {
@@ -245,11 +246,11 @@ export const en: Content = {
 
   moving: {
     eyebrow: 'Coming from another platform?',
-    title: 'Move your store and pay no order fees for the first {freeMonths} months',
-    body: "There's no automatic import from other platforms yet, so you add your products yourself, or ask your connected assistant to. Talk to us on WhatsApp before you start, and our team switches those months on for your store.",
+    title: "Move your store, and pay nothing while you're setting it up",
+    body: "There's no automatic import from other platforms yet, so you add your products yourself, or ask your connected assistant to. Your store stays a draft until you publish it, and a draft takes no orders, so there are no fees.",
     points: [
-      'No order fees for your first {freeMonths} months, once per store',
-      'Our team switches it on, so talk to us before you start',
+      'Your store is a draft until you publish it: no orders, no fees',
+      'A month with no orders has no bill',
       'Add your products yourself or with your assistant',
     ],
   },
@@ -285,11 +286,11 @@ export const en: Content = {
       },
       {
         q: 'I already have a store elsewhere. How do I move?',
-        a: "There's no automatic import from other platforms yet: you open your store and add your products yourself, or ask your connected assistant to. Talk to us on WhatsApp before you start. A store that moves over pays no order fees for its first {freeMonths} months, once, and our team switches it on.",
+        a: "There's no automatic import from other platforms yet: you open your store and add your products yourself, or ask your connected assistant to. Your store stays a draft until you publish it, so you pay nothing while you set it up.",
       },
       {
         q: 'Do I need a WhatsApp order-confirmation service?',
-        a: "No, your store works without one. Wkil, which confirms orders on WhatsApp, is a separate product with its own account and price, and connecting it isn't open yet. Once it is, an order the customer cancels themselves on WhatsApp within {cancelDays} days won't be charged to you.",
+        a: "No, your store works without one. Wkil, which confirms orders on WhatsApp, is a separate product with its own account, and connecting it isn't open yet. Once it is, an order the customer cancels themselves on WhatsApp within {cancelDays} days won't be charged to you.",
       },
       {
         q: 'Can I try it before I pay anything?',
