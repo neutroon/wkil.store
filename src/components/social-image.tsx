@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import { BRAND_NAME } from '@/lib/brand';
 import type { Locale } from '@/lib/locale';
+import { visualArabic } from '@/lib/arabic-visual';
 import { SITE_URL } from '@/lib/site';
 import { OG_SIZE, SOCIAL_COPY } from '@/lib/social';
 
@@ -12,9 +13,10 @@ import { OG_SIZE, SOCIAL_COPY } from '@/lib/social';
  * cannot read CSS variables.
  *
  * Fonts (SIL Open Font License, from Google Fonts, in assets/og/): Instrument Sans for Latin
- * and digits, as on the page. Arabic is Cairo, not the page's Alyamama: Satori's shaper
- * crashes on Alyamama's contextual lookups, and Cairo shapes correctly. Satori also has no
- * bidi, so Arabic lines are laid out word by word from the right (see `Line`).
+ * and digits, as on the page. Arabic is Noto Sans Arabic ExtraBold, not the page's Alyamama:
+ * Satori's shaper crashes on Alyamama's contextual lookups, and Alyamama has no presentation
+ * forms, which src/lib/arabic-visual.ts draws with. The Noto file is subset to the Arabic
+ * block and presentation forms, with no OpenType features (none are needed).
  */
 
 const C = {
@@ -33,14 +35,14 @@ const fontFile = (name: string) => readFile(join(process.cwd(), 'assets/og', nam
 const fonts = Promise.all([
   fontFile('instrument-sans-600.ttf'),
   fontFile('instrument-sans-700.ttf'),
-  fontFile('cairo-800.ttf'),
+  fontFile('noto-sans-arabic-800.ttf'),
 ]).then(([latin600, latin700, arabic800]) => [
   { name: 'Instrument Sans', data: latin600, weight: 600 as const, style: 'normal' as const },
   { name: 'Instrument Sans', data: latin700, weight: 700 as const, style: 'normal' as const },
-  { name: 'Cairo', data: arabic800, weight: 800 as const, style: 'normal' as const },
+  { name: 'Noto Sans Arabic', data: arabic800, weight: 800 as const, style: 'normal' as const },
 ]);
 
-const FONT_STACK = "'Instrument Sans', 'Cairo'";
+const FONT_STACK = "'Instrument Sans', 'Noto Sans Arabic'";
 
 /** Lucide's "store" glyph, the one BrandMark draws. */
 function StoreGlyph({ size, color, strokeWidth = 2 }: { size: number; color: string; strokeWidth?: number }) {
@@ -53,31 +55,12 @@ function StoreGlyph({ size, color, strokeWidth = 2 }: { size: number; color: str
   );
 }
 
-const ARABIC = /[؀-ۿݐ-ݿ]/;
-
 /**
- * One line of text in the reading direction. Satori lays text out left to right, so an
- * Arabic line is split into words, and each word into Arabic and non-Arabic runs ("ج.م"
- * is ج, ., م), placed from the right. Each Arabic run is shaped on its own.
+ * One line of text. Arabic goes in already joined and in drawing order (see
+ * src/lib/arabic-visual.ts), because Satori has no bidi and mis-measures shaped Arabic.
  */
 function Line({ text, locale, style }: { text: string; locale: Locale; style: Record<string, string | number> }) {
-  if (locale === 'en') return <div style={{ display: 'flex', ...style }}>{text}</div>;
-  const words = text.split(/\s+/).filter(Boolean);
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse', flexWrap: 'wrap', columnGap: '0.26em', ...style }}>
-      {words.map((word, i) => {
-        const runs = word.match(/[؀-ۿݐ-ݿ]+|[^؀-ۿݐ-ݿ]+/g) ?? [word];
-        const reversed = runs.length > 1 && runs.some((r) => ARABIC.test(r));
-        return (
-          <div key={i} style={{ display: 'flex', flexDirection: reversed ? 'row-reverse' : 'row' }}>
-            {runs.map((run, j) => (
-              <span key={j}>{run}</span>
-            ))}
-          </div>
-        );
-      })}
-    </div>
-  );
+  return <div style={{ display: 'flex', whiteSpace: 'nowrap', ...style }}>{locale === 'ar' ? visualArabic(text) : text}</div>;
 }
 
 /** The 1200×630 preview for a locale. */

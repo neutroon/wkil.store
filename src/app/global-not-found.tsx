@@ -10,7 +10,6 @@ import './globals.css';
 // site's default), English below it in its own direction.
 export const metadata: Metadata = {
   title: `الصفحة مش موجودة · Page not found | ${BRAND_NAME.ar}`,
-  robots: { index: false, follow: true },
 };
 export const viewport = siteViewport;
 

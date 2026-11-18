@@ -50,7 +50,11 @@ export function pageMetadata(locale: Locale): Metadata {
       description: meta.ogDescription,
       images: [image],
     },
-    icons: { apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' } },
+    // Set by hand, so the apple icon keeps its .png; that replaces the icon.svg file convention.
+    icons: {
+      icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
+      apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    },
     formatDetection: { telephone: false },
   };
 }

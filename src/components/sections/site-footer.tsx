@@ -11,10 +11,10 @@ import { SIGN_IN_URL } from '@/lib/site';
 export function SiteFooter({ content, locale }: { content: Content; locale: Locale }) {
   const { footer, nav } = content;
   const other = otherLocale(locale);
-  // The account row is always here; skip it in a column if the copy repeats it.
-  const columns = footer.columns
-    .map((column) => ({ ...column, links: column.links.filter((link) => link.href !== SIGN_IN_URL) }))
-    .filter((column) => column.links.length > 0);
+  const { columns } = footer;
+  // Sign-in must be reachable below 640px, where the header drops it: add it to the bottom
+  // row unless a column already links to it.
+  const hasSignIn = columns.some((column) => column.links.some((link) => link.href === SIGN_IN_URL));
 
   return (
     <footer data-tone="ink" className="border-t border-line bg-ink py-10">
@@ -26,7 +26,7 @@ export function SiteFooter({ content, locale }: { content: Content; locale: Loca
           </div>
 
           {columns.length > 0 && (
-            <div className="grid gap-x-8 gap-y-8 sm:grid-cols-3 lg:col-span-8">
+            <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:col-span-8">
               {columns.map((column, i) => (
                 <nav key={column.title + i} aria-labelledby={`footer-col-${i}`}>
                   <h2 id={`footer-col-${i}`} className="text-small font-semibold text-fg">
@@ -50,11 +50,13 @@ export function SiteFooter({ content, locale }: { content: Content; locale: Loca
         <div className="mt-10 flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-line pt-6">
           <p className="text-small text-fg-muted nums">{footer.copyright}</p>
           <ul className="flex flex-wrap items-center gap-x-6">
-            <li>
-              <TextLink href={SIGN_IN_URL} quiet className="text-small">
-                {nav.signIn}
-              </TextLink>
-            </li>
+            {!hasSignIn && (
+              <li>
+                <TextLink href={SIGN_IN_URL} quiet className="text-small">
+                  {nav.signIn}
+                </TextLink>
+              </li>
+            )}
             <li>
               <TextLink href={pathOf(other)} quiet lang={other} hrefLang={other} className="text-small">
                 <Languages aria-hidden="true" className="size-[1.1em] shrink-0" />
