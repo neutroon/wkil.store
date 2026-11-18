@@ -1,11 +1,13 @@
-import { Store } from 'lucide-react';
 import { BRAND_NAME } from '@/lib/brand';
 import { cn } from '@/lib/cn';
 import { pathOf, type Locale } from '@/lib/locale';
+import { BrandLogo } from './brand-logo';
 
 /**
- * The product's mark as the admin shows it today (a store icon in a soft teal tile) beside
- * the name from `src/lib/brand.ts`. With `link`, it leads to the locale's home page.
+ * The product's logo: «متجر وكيل» drawn as outlines, with the Wkil bubble carrying a shopping
+ * bag (src/lib/logo.ts). The logo is the same in both languages, as on wkil.app; the name
+ * from `src/lib/brand.ts` is there for screen readers. With `link`, it leads to the locale's
+ * home page.
  */
 export function BrandMark({ locale, size = 'md', link = false, className }: {
   locale: Locale;
@@ -15,12 +17,10 @@ export function BrandMark({ locale, size = 'md', link = false, className }: {
 }) {
   const mark = (
     <>
-      <span aria-hidden="true" className={cn('inline-flex shrink-0 items-center justify-center rounded-md bg-accent-soft text-accent', size === 'md' ? 'size-10' : 'size-9')}>
-        <Store className="size-5" />
-      </span>
-      <span className={cn('font-bold whitespace-nowrap text-fg', size === 'md' ? 'text-subheading' : 'text-body')}>{BRAND_NAME[locale]}</span>
+      <BrandLogo className={size === 'md' ? 'h-10' : 'h-9'} />
+      <span className="sr-only">{BRAND_NAME[locale]}</span>
     </>
   );
-  const classes = cn('inline-flex min-h-11 items-center gap-2.5', className);
+  const classes = cn('inline-flex min-h-11 shrink-0 items-center', className);
   return link ? <a href={pathOf(locale)} className={classes}>{mark}</a> : <span className={classes}>{mark}</span>;
 }

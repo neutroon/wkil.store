@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import { BRAND_NAME } from '@/lib/brand';
+import { MARK_BAG, MARK_BAG_HANDLE, MARK_BAG_HANDLE_WIDTH, MARK_BUBBLE, MARK_EYES, MARK_VIEW_BOX, MARK_WINK, MARK_WINK_WIDTH } from '@/lib/logo';
 import type { Locale } from '@/lib/locale';
 import { visualArabic } from '@/lib/arabic-visual';
 import { SITE_URL } from '@/lib/site';
@@ -44,13 +45,16 @@ const fonts = Promise.all([
 
 const FONT_STACK = "'Instrument Sans', 'Noto Sans Arabic'";
 
-/** Lucide's "store" glyph, the one BrandMark draws. */
-function StoreGlyph({ size, color, strokeWidth = 2 }: { size: number; color: string; strokeWidth?: number }) {
+/** The mark (src/lib/logo.ts) as a still: the bubble, the bag in `bag`, one eye and a wink. */
+function StoreMark({ size, bubble, bag }: { size: number; bubble: string; bag: string }) {
+  const eye = MARK_EYES[0];
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" />
-      <path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" />
-      <path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" />
+    <svg width={size} height={size} viewBox={MARK_VIEW_BOX}>
+      <path d={MARK_BUBBLE} fill={bubble} />
+      <path d={MARK_BAG} fill={bag} />
+      <path d={MARK_BAG_HANDLE} fill="none" stroke={bag} strokeWidth={MARK_BAG_HANDLE_WIDTH} strokeLinecap="round" />
+      <circle cx={eye.cx} cy={eye.cy} r={eye.r} fill={bubble} />
+      <path d={MARK_WINK} fill="none" stroke={bubble} strokeWidth={MARK_WINK_WIDTH} strokeLinecap="round" />
     </svg>
   );
 }
@@ -75,9 +79,7 @@ export async function socialImage(locale: Locale): Promise<ImageResponse> {
       <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '64px 72px', background: C.ink, color: C.fg, fontFamily: FONT_STACK }}>
         {/* Brand mark */}
         <div style={{ display: 'flex', flexDirection: row, alignItems: 'center', gap: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, borderRadius: 18, background: C.mintSoft }}>
-            <StoreGlyph size={38} color={C.mint} />
-          </div>
+          <StoreMark size={80} bubble={C.mint} bag={C.ink} />
           <Line text={BRAND_NAME[locale]} locale={locale} style={{ fontSize: 40, fontWeight: rtl ? 800 : 700 }} />
         </div>
 
@@ -105,12 +107,12 @@ export async function socialImage(locale: Locale): Promise<ImageResponse> {
   );
 }
 
-/** The 180×180 touch icon: the store glyph on the brand teal, as in src/app/icon.svg. */
+/** The 180×180 touch icon: the mark of src/app/icon.svg, in white on the brand teal. */
 export function touchIcon(): ImageResponse {
   return new ImageResponse(
     (
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.brand }}>
-        <StoreGlyph size={112} color={C.white} strokeWidth={2} />
+        <StoreMark size={140} bubble={C.white} bag={C.brand} />
       </div>
     ),
     { width: 180, height: 180 },

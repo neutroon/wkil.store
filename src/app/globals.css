@@ -365,6 +365,58 @@
     radial-gradient(circle var(--notch) at 100% 0, transparent 97%, black) 100% 0 / 51% 100% no-repeat;
 }
 
+/* The logo (src/components/ui/brand-logo.tsx). «كيل» takes the text colour; «متجر», the
+   bubble and the eyes take the accent; the bag takes the colour of the page behind it. The
+   eyes look toward the pointer (BrandLogo sets --look-x and --look-y) and blink. */
+@layer components {
+  .brand-logo {
+    --brand-bag: var(--color-canvas);
+    display: block;
+    width: auto;
+    overflow: visible;
+  }
+  [data-tone="ink"] .brand-logo {
+    --brand-bag: var(--color-ink);
+  }
+  .brand-letters {
+    fill: var(--color-fg);
+  }
+  .brand-word,
+  .brand-bubble,
+  .brand-eyes {
+    fill: var(--color-accent);
+  }
+  .brand-bag {
+    fill: var(--brand-bag);
+  }
+  .brand-bag-handle {
+    fill: none;
+    stroke: var(--brand-bag);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .brand-eyes {
+    transform: translate(calc(var(--look-x, 0) * 1px), calc(var(--look-y, 0) * 1px));
+    transition: transform 180ms ease-out;
+  }
+  .brand-eye {
+    animation: brand-blink 5.5s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}
+
+@keyframes brand-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.12);
+  }
+}
+
 /* Motion is off for anyone who asks for less of it. Nothing depends on an animation to
    be visible: `rise` only has a `from`, so without it the element is simply there. */
 @media (prefers-reduced-motion: reduce) {
