@@ -1,5 +1,6 @@
 import type { Locale } from '@/lib/locale';
 import { formatMoney, formatNumber } from '@/components/ui/money';
+import { SUPPORT_PHONE_LOCAL } from '@/lib/site';
 import { CAP_REACHED_AT_ORDERS, MONTHLY_CAP, PER_ORDER, PRICING } from './pricing';
 import type { Content } from './types';
 import { ar } from './ar';
@@ -17,6 +18,8 @@ export function fill(text: string, locale: Locale): string {
     cancelDays: formatNumber(PRICING.cancelWindowDays),
     cancelPercent: `${PRICING.cancelAllowancePercent}%`,
     year: String(new Date().getFullYear()),
+    // Isolated left to right, so the digits keep their order inside Arabic text.
+    supportPhone: `\u2066${SUPPORT_PHONE_LOCAL}\u2069`,
   };
   return text.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match);
 }

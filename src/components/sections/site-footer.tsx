@@ -19,14 +19,14 @@ export function SiteFooter({ content, locale }: { content: Content; locale: Loca
   return (
     <footer data-tone="ink" className="border-t border-line bg-ink py-10">
       <Container>
-        <div className="grid gap-x-8 gap-y-10 lg:grid-cols-12">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-10 lg:grid-cols-12">
           <div className="flex flex-col items-start gap-3 lg:col-span-4">
             <BrandMark locale={locale} size="sm" link />
             {footer.tagline && <p className="max-w-[24rem] text-small text-fg-muted">{footer.tagline}</p>}
           </div>
 
           {columns.length > 0 && (
-            <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:col-span-8">
+            <div className="grid gap-x-8 gap-y-8 grid-cols-2 sm:grid-cols-3 lg:col-span-8">
               {columns.map((column, i) => (
                 <nav key={column.title + i} aria-labelledby={`footer-col-${i}`}>
                   <h2 id={`footer-col-${i}`} className="text-small font-semibold text-fg">

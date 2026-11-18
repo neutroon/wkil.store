@@ -1,4 +1,4 @@
-import { SIGN_IN_URL, SIGN_UP_URL } from '@/lib/site';
+import { SIGN_IN_URL, SIGN_UP_URL, SUPPORT_WHATSAPP_URL } from '@/lib/site';
 import type { Content } from './types';
 
 /**
@@ -240,7 +240,7 @@ export const en: Content = {
     cancellationNote:
       "An order counts the moment it's placed, confirmed or not, delivered or not. Cancel it yourself within {cancelDays} days and it isn't charged, up to {cancelPercent} of the month's orders, rounded up. Cancellations beyond that, or later than {cancelDays} days, are charged. A parcel refused at the door is an order you cancel, so the same rule applies.",
     finePrint:
-      "Prices include VAT. You get one bill a month, after the month ends. Paying it online isn't open yet; until it is, our support team helps you pay over WhatsApp.",
+      "Prices include VAT. You get one bill a month, after the month ends. Paying it online isn't open yet; until it is, our support team helps you pay over WhatsApp at {supportPhone}.",
     cta: START,
   },
 
@@ -282,7 +282,7 @@ export const en: Content = {
       },
       {
         q: 'How do I pay you?',
-        a: "One bill in Egyptian pounds after each month ends, with no balance to top up in advance. Paying the bill online isn't open yet; until it is, our support team helps you pay over WhatsApp. If a bill stays unpaid for 14 days your Admin Panel becomes read-only, and after 21 days your store closes to customers until it's paid.",
+        a: "One bill in Egyptian pounds after each month ends, with no balance to top up in advance. Paying the bill online isn't open yet; until it is, our support team helps you pay over WhatsApp at {supportPhone}. If a bill stays unpaid for 14 days your Admin Panel becomes read-only, and after 21 days your store closes to customers until it's paid.",
       },
       {
         q: 'I already have a store elsewhere. How do I move?',
@@ -324,6 +324,10 @@ export const en: Content = {
           { label: 'Sign in', href: SIGN_IN_URL },
           { label: START, href: SIGN_UP_URL },
         ],
+      },
+      {
+        title: 'Support',
+        links: [{ label: 'WhatsApp {supportPhone}', href: SUPPORT_WHATSAPP_URL }],
       },
     ],
     copyright: '© {year} Wkil Store',

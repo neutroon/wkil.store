@@ -105,7 +105,7 @@ describe('copy rules', () => {
   });
 
   test('only known placeholders are used', () => {
-    const known = new Set(['perOrder', 'cap', 'capOrders', 'freeMonths', 'cancelDays', 'cancelPercent', 'year']);
+    const known = new Set(['perOrder', 'cap', 'capOrders', 'freeMonths', 'cancelDays', 'cancelPercent', 'year', 'supportPhone']);
     for (const [locale, c] of LOCALES) {
       for (const { path, text } of strings(c)) {
         for (const [, key] of text.matchAll(/\{(\w+)\}/g)) expect(known.has(key!), `${locale}.${path}: {${key}}`).toBe(true);

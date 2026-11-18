@@ -17,6 +17,12 @@ export const SIGN_UP_URL = `${ADMIN_URL}/login`;
 /** Merchants who already have a store. */
 export const SIGN_IN_URL = `${ADMIN_URL}/login`;
 
+/** Support on WhatsApp (the same number the admin shows merchants: store-platform packages/shared/src/platform.ts). */
+export const SUPPORT_PHONE_E164 = '+201515277663';
+/** As Egyptians write it: 01515277663. */
+export const SUPPORT_PHONE_LOCAL = `0${SUPPORT_PHONE_E164.slice(3)}`;
+export const SUPPORT_WHATSAPP_URL = `https://wa.me/${SUPPORT_PHONE_E164.slice(1)}`;
+
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 }
