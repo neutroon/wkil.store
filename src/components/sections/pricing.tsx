@@ -28,7 +28,7 @@ export function Pricing({ content, locale }: { content: Content; locale: Locale 
   const { title: calculatorTitle, ...labels } = p.calculator;
   return (
     <Section id={p.id} tone="ink" header="split" eyebrow={p.eyebrow} title={p.title} lede={p.lede}>
-      <div className="grid items-start gap-8 lg:grid-cols-12">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Ticket stub={<CapLine text={p.capLabel} locale={locale} />}>
             <Stat

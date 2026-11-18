@@ -76,7 +76,7 @@ export function PricingCalculator({ locale, labels }: { locale: Locale; labels: 
             type="text"
             inputMode="numeric"
             autoComplete="off"
-            aria-labelledby={`${id}-label ${id}-unit`}
+            aria-labelledby={`${id}-label`}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
@@ -99,7 +99,7 @@ export function PricingCalculator({ locale, labels }: { locale: Locale; labels: 
         max={CALCULATOR.max}
         step={1}
         value={Math.min(orders, CALCULATOR.max)}
-        aria-valuetext={`${ordersText}${comma}${formatPrice(fee, locale)}`}
+        aria-valuetext={ordersText}
         onChange={(e) => update(Number(e.target.value))}
         onKeyDown={onRangeKey}
         className="mt-4 block h-11 w-full cursor-pointer accent-mint"

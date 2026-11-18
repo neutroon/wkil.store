@@ -16,7 +16,7 @@ export function Features({ content, locale }: { content: Content; locale: Locale
     <Section id={features.id} eyebrow={features.eyebrow} title={features.title} lede={features.lede}>
       <div className="flex flex-col gap-y-section">
         {features.rows.map((row, i) => (
-          <div key={row.key} className="grid items-center gap-x-8 gap-y-10 lg:grid-cols-12">
+          <div key={row.key} className="grid grid-cols-[minmax(0,1fr)] items-center gap-x-8 gap-y-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <SectionHeader as="h3" size="heading" eyebrow={row.eyebrow} title={row.title} lede={row.body} />
               {row.points.length > 0 && (

@@ -42,7 +42,7 @@ const ICONS: Record<IconKey, { icon: LucideIcon; flip?: boolean }> = {
 };
 
 /** Everything else a merchant gets, as open rows on hairlines. */
-export function FeatureGrid({ content }: { content: Content; locale: Locale }) {
+export function FeatureGrid({ content, locale }: { content: Content; locale: Locale }) {
   const grid = content.grid;
   return (
     <Section id="more" tone="muted" title={grid.title} lede={grid.lede}>
@@ -55,7 +55,12 @@ export function FeatureGrid({ content }: { content: Content; locale: Locale }) {
               <div className="min-w-0">
                 <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 text-subheading">
                   <span>{item.title}</span>
-                  {item.soon && <Badge>{grid.soonLabel}</Badge>}
+                  {item.soon && (
+                    <>
+                      <span className="sr-only">{locale === 'ar' ? '، ' : ', '}</span>
+                      <Badge>{grid.soonLabel}</Badge>
+                    </>
+                  )}
                 </h3>
                 <p className="mt-1 text-fg-muted">{item.body}</p>
               </div>

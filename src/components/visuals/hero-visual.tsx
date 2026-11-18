@@ -12,12 +12,12 @@ export function HeroVisual({ shop, locale, className }: { shop: DemoShop; locale
     <div aria-hidden="true" className={className}>
       <Stage>
         {/* At 360px the stage is narrower than the phone: let it use the stage's padding. */}
-        <div className="max-sm:-mx-3">
+        <div className="max-sm:-mx-3 max-[359px]:[zoom:0.84]">
           <PhoneFrame label={shop.shopName}>
             <ShopScreen shop={shop} locale={locale} />
           </PhoneFrame>
         </div>
-        <div className="absolute start-2 bottom-6 w-64 sm:-start-8">
+        <div className="absolute start-2 bottom-6 w-64 lg:-start-8">
           <OrderTicket shop={shop} locale={locale} />
         </div>
       </Stage>

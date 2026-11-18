@@ -297,6 +297,10 @@
   }
 
   /* One focus ring everywhere: the tone's ring colour, clear of the element. */
+  a, button, summary, input {
+    outline-color: var(--color-ring);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 3px;

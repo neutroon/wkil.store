@@ -23,7 +23,7 @@ export function Stage({ tone = 'mist', className, children }: {
 }) {
   const t = tones[tone];
   return (
-    <div data-tone={t.tone} className={cn('relative grid place-items-center rounded-xl px-6 py-10 sm:px-10 sm:py-14', t.className, className)}>
+    <div data-tone={t.tone} className={cn('relative grid grid-cols-[minmax(0,1fr)] place-items-center rounded-xl px-6 py-10 sm:px-10 sm:py-14', t.className, className)}>
       {children}
     </div>
   );

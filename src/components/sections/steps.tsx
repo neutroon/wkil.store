@@ -8,7 +8,7 @@ export function Steps({ content }: { content: Content; locale: Locale }) {
   const steps = content.steps;
   return (
     <Section id={steps.id} tone="muted" header="split" eyebrow={steps.eyebrow} title={steps.title} lede={steps.lede}>
-      <ol className="grid gap-x-8 gap-y-10 md:grid-cols-3">
+      <ol className="grid grid-cols-[minmax(0,1fr)] gap-x-8 gap-y-10 md:grid-cols-3">
         {steps.items.map((step, i) => (
           <li key={i} className={cn('border-t-2 pt-6', i === 0 ? 'border-brand' : 'border-line')}>
             <IconTile label={String(i + 1)} solid={i === 0} />

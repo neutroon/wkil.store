@@ -17,7 +17,7 @@ export function SiteHeader({ content, locale }: { content: Content; locale: Loca
       <SkipLink>{nav.skipToContent}</SkipLink>
       <header data-tone="default" className="sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur">
         <Container className="flex h-header items-center justify-between gap-6">
-          <BrandMark locale={locale} link />
+          <BrandMark locale={locale} link className="max-[359px]:[&>span:last-child]:sr-only" />
 
           <nav aria-label={nav.navLabel} className="hidden lg:block">
             <ul className="flex items-center gap-7">

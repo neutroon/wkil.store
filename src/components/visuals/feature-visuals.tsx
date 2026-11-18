@@ -61,7 +61,7 @@ function CheckoutVisual({ row, shop, locale }: VisualProps) {
   const t = (key: string) => visualText(row, key);
   const delivery = visualAmount(row, 'deliveryPrice');
   return (
-    <div className="max-sm:-mx-3">
+    <div className="max-sm:-mx-3 max-[359px]:[zoom:0.84]">
       <PhoneFrame label={shop.shopName}>
         <div className="flex h-full flex-col">
           <div className="flex h-11 shrink-0 items-center justify-between border-b border-line px-4">

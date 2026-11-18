@@ -13,7 +13,7 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
   const hero = content.hero;
   return (
     <section data-tone="default" aria-labelledby="hero-title" className="bg-canvas pt-12 pb-section lg:pt-20">
-      <Container className="grid items-center gap-x-8 gap-y-14 lg:grid-cols-12">
+      <Container className="grid grid-cols-[minmax(0,1fr)] items-center gap-x-8 gap-y-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <h1 id="hero-title" className="max-w-[13em] text-display animate-rise stagger-0">
             {hero.title}
