@@ -96,7 +96,7 @@ describe('copy rules', () => {
   });
 
   test('prices appear only through placeholders, never as digits', () => {
-    const literals = ['1.50', '1٫50', '2,500', '2500', '1,667', '1667'];
+    const literals = ['1.50', '1٫50', '5,000', '5000', '3,334', '3334', '2,500', '2500', '1,667', '1667'];
     for (const [locale, c] of LOCALES) {
       for (const { path, text } of strings(c)) {
         for (const literal of literals) expect(text, `${locale}.${path}`).not.toContain(literal);
