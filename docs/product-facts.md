@@ -16,7 +16,7 @@ Read from `/home/user/store-platform` on 18 November 2026 (last commit `b8a9f73`
 
 ## 1. One-paragraph truth
 
-A merchant in Egypt signs in with their mobile number and a 6-digit code sent on WhatsApp (no password, no card, no email), types a store name and a link, and gets a store at `<handle>.wkil.store` in Arabic and RTL, created with a delivery price for each of the 27 governorates and four standard pages, as a draft they publish once it has a product. Shoppers order with cash on delivery only: product pages with options and quantity offers, a cart, a checkout that charges the governorate's delivery price, and one-product landing pages for ads with their own order form. The merchant runs orders (statuses, batches, A4 printing), customers, abandoned checkouts, Meta Pixel and Conversions API, and can connect an AI assistant (through MCP) and the separate WhatsApp product Wkil for order confirmation. There is no monthly fee and no trial: the store pays EGP 1.50 for each order a shopper places, at most EGP 2,500 a month, billed monthly. As of this reading the platform is built and runs on staging, but production has not been run for real, no store is live on it, and three things a merchant would expect are not open yet: paying bills online (Paymob), custom domains (Cloudflare) and the Wkil connection (needs Wkil's side and a production switch).
+A merchant in Egypt signs in with their mobile number and a 6-digit code sent on WhatsApp (no password, no card, no email), types a store name and a link, and gets a store at `<handle>.wkil.store` in Arabic and RTL, created with a delivery price for each of the 27 governorates and four standard pages, as a draft they publish once it has a product. Shoppers order with cash on delivery only: product pages with options and quantity offers, a cart, a checkout that charges the governorate's delivery price, and one-product landing pages for ads with their own order form. The merchant runs orders (statuses, batches, A4 printing), customers, abandoned checkouts, Meta Pixel and Conversions API, and can connect an AI assistant (through MCP) and the separate WhatsApp product Wkil for order confirmation. There is no monthly fee and no trial: the store pays EGP 1.50 for each order a shopper places, at most EGP 5,000 a month (EGP 2,500 until 27 November 2026), billed monthly. As of this reading the platform is built and runs on staging, but production has not been run for real, no store is live on it, and three things a merchant would expect are not open yet: paying bills online (Paymob), custom domains (Cloudflare) and the Wkil connection (needs Wkil's side and a production switch).
 
 Sources: `apps/admin/app/login/page.tsx:76`, `apps/admin/app/start/start-form.tsx:75-83`, `packages/core/src/provisioning/create-store.ts:43-58`, `packages/core/src/billing/pricing.ts:24-33`, `packages/db/prisma/schema.prisma:801`, `docs/adr/0021-production-digitalocean-cloudflare.md:3`, `docs/adr/0010-pricing-per-order.md:133` ("No store is live on this platform"), `apps/api/src/server.ts:74-75` and `:86-90`.
 
@@ -73,7 +73,7 @@ Source of the rule: `docs/adr/0010-pricing-per-order.md` (accepted 11 November 2
 | What | Number | Source | Mark |
 |---|---|---|---|
 | Fee per order placed | **EGP 1.50** (`perOrderMinor: 150` piastres) | `packages/core/src/billing/pricing.ts:25`; ADR 0010 `:21` | [code] |
-| Most a store pays in order fees in a month | **EGP 2,500** (`monthlyCapMinor: 250_000`) | `pricing.ts:26`, `:47-49`; ADR 0010 `:25` | [code] |
+| Most a store pays in order fees in a month | **EGP 5,000** (`monthlyCapMinor: 500_000`; EGP 2,500 until 27 November 2026) | `pricing.ts:26`, `:47-49`; ADR 0010, "Revised 27 November 2026"; migration `20261202090000_monthly_cap_5000` | [code] |
 | Monthly subscription fee | **None.** The `standard` plan's `price_minor` is 0 and a bill has one line, the order fees. | `migration.sql:57` (20261112090000); ADR 0010 `:144` | [code] |
 | Trial | **None, and none needed**: "No trial: a store pays per order placed, so it costs nothing until it sells" | `packages/core/src/provisioning/create-store.ts:54` | [code] |
 | Free order allowance (first N orders free) | **None.** Not in the pricing object. | `pricing.ts:5-22` | [code] |
@@ -95,7 +95,7 @@ Quoted source lines:
 - `docs/adr/0010-pricing-per-order.md:42` — "The cap applies last, to what is left after the credits."
 - `packages/core/src/billing/pricing.ts:47-49` — `return Math.min(Math.max(orders, 0) * pricing.perOrderMinor, pricing.monthlyCapMinor);`
 - `packages/core/src/billing/pricing.ts:55-57` — `return Math.ceil((Math.max(placed, 0) * pricing.cancelAllowanceBps) / 10_000);`
-- The merchant's own billing page says it this way: `بتدفع على كل طلب يتطلب من متجرك.` and `كل طلب العميل بيعمله من متجرك بيتحسب أول ما يتطلب، سواء أكدته أو لأ` and `الحد الأقصى في الشهر 2,500 ج.م: مهما زادت طلباتك، مش هتدفع أكتر من كده.` (`apps/admin/src/lib/billing-messages.ts:170`, `:72`, `:174`). [code]
+- The merchant's own billing page says it this way: `بتدفع على كل طلب يتطلب من متجرك.` and `كل طلب العميل بيعمله من متجرك بيتحسب أول ما يتطلب، سواء أكدته أو لأ` and `الحد الأقصى في الشهر 5,000 ج.م: مهما زادت طلباتك، مش هتدفع أكتر من كده.` (`apps/admin/src/lib/billing-messages.ts:170`, `:72`, `:174`). [code]
 
 ### 3.2 What counts as a billable order
 
@@ -144,10 +144,11 @@ Assumptions: a normal paying month (no free months), no credits carried from ear
 | 50 | 8 | 5 | 45 | 45 × 1.50 = **67.50 ج.م** (3 of the 8 are still charged) |
 | 300 | 0 | 30 available, 0 used | 300 | 300 × 1.50 = **450 ج.م** |
 | 300 | 40 | 30 | 270 | 270 × 1.50 = **405 ج.م** |
-| 2,000 | 0 | 200 available, 0 used | 2,000 | 3,000 → capped at **2,500 ج.م** |
-| 2,000 | 200 | 200 | 1,800 | 2,700 → still capped at **2,500 ج.م** (credits above the cap save nothing: ADR 0010 `:95`) |
+| 2,000 | 0 | 200 available, 0 used | 2,000 | 2,000 × 1.50 = **3,000 ج.م** |
+| 4,000 | 0 | 400 available, 0 used | 4,000 | 6,000 → capped at **5,000 ج.م** |
+| 4,000 | 400 | 400 | 3,600 | 5,400 → still capped at **5,000 ج.م** (credits above the cap save nothing: ADR 0010, "Credits and the cap") |
 
-- The cap is reached at **1,667 charged orders** (1,666 orders cost EGP 2,499): ADR 0010 `:95`. [docs; follows from `pricing.ts:47-49`]
+- The cap is reached at **3,334 charged orders** (3,333 orders cost EGP 4,999.50): ADR 0010, "Credits and the cap". [docs; follows from `pricing.ts:47-49`]
 - At 2,000 orders the effective fee is EGP 1.25 an order; at 4,000 it is about EGP 0.63. [arithmetic]
 - A store with 0 orders in a month pays 0 and gets no bill. [code: `jobs/billing.ts:30-36`]
 
@@ -267,7 +268,7 @@ There are no plan tiers: every store has the same limits. (`migration.sql:54-58`
 | Redirects (old links of a moved store) | 10,000 per store | `packages/core/src/redirects/rules.ts:17` | [code] |
 | Store link | 3 to 30 characters, `a-z`, `0-9`, hyphens; some names reserved | `packages/shared/src/handles.ts:2-22` | [code] |
 | Store name | 2 to 60 characters | `apps/admin/app/start/start-form.tsx:32`; `packages/shared/src/store-settings.ts:25` | [code] |
-| Orders | No limit on the number of orders; fees are capped at EGP 2,500 a month (section 3) | `packages/core/src/billing/pricing.ts:26` | [code] |
+| Orders | No limit on the number of orders; fees are capped at EGP 5,000 a month (section 3) | `packages/core/src/billing/pricing.ts:26` | [code] |
 
 ---
 
@@ -399,7 +400,7 @@ Things the repository does not settle. Each needs the owner or the team.
 9. **Wkil.** Is Wkil's side of "ربط وكيل" built (not found in `/home/user/wkil-main-service` or `/home/user/wkil-app`)? When is it switched on in production? What does Wkil cost the merchant, and may the page describe it only as "order confirmation on WhatsApp" when Wkil's own site sells more (`/home/user/wkil-landing/messages/ar/landing.json:3-13`)?
 10. **Custom domains.** When does Cloudflare open them (`docs/adr/0011-custom-domains.md:31`, `:67`)? Until then the page must not promise them as available.
 11. **The 3 free months** are for "a store we move over from another platform" (`docs/adr/0010-pricing-per-order.md:28`), granted by staff. Is this an offer to any merchant leaving another platform, given that no importer for other platforms exists, or only for the company's own five stores?
-12. **Enterprise.** "Prices agreed per store" from 5,000 orders a month, while the cap already holds every store to EGP 2,500. What is offered above that?
+12. **Enterprise.** "Prices agreed per store" from 5,000 orders a month, while the cap already holds every store to EGP 5,000. What is offered above that?
 13. **AI add-on (EGP 299 a month) and WhatsApp messages (cost plus 10%)**: what are they and when (`docs/adr/0010-pricing-per-order.md:26-27`)? Not to be advertised until answered.
 14. **Support channel.** The code's support WhatsApp is `+201515277663` (`packages/shared/src/platform.ts:4`). Is that the public number for the page? Hours?
 15. **Team members.** When can a merchant add staff (`docs/adr/0006-merchant-sign-in.md:25`)?

@@ -7,7 +7,7 @@ export const PRICING = {
   /** Each order a shopper places, VAT included. */
   perOrderMinor: 150,
   /** The most a store pays in order fees in a month. */
-  monthlyCapMinor: 250_000,
+  monthlyCapMinor: 500_000,
   /** The store's own cancellations within this many days of the order can be free... */
   cancelWindowDays: 14,
   /** ...up to this share of the month's orders, in percent (rounded up). */
@@ -16,7 +16,7 @@ export const PRICING = {
   movedStoreFreeMonths: 3,
 } as const;
 
-/** Orders in a month at which the cap is reached: 1,667. */
+/** Orders in a month at which the cap is reached: 3,334. */
 export const CAP_REACHED_AT_ORDERS = Math.ceil(PRICING.monthlyCapMinor / PRICING.perOrderMinor);
 
 /**

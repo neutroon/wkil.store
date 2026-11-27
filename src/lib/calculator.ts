@@ -6,13 +6,13 @@ import type { Locale } from './locale';
 export const CALCULATOR = {
   min: 0,
   /** The slider's end. A larger number can still be typed into the box. */
-  max: 3000,
+  max: 5000,
   /** What the page shows before anyone touches it, in the static HTML too. */
   defaultOrders: 300,
   /** The most the number box accepts. */
   maxTyped: 99_999,
   /** Labelled under the slider; PageUp and PageDown jump between them. One is where the cap starts. */
-  stops: [0, 500, 1000, CAP_REACHED_AT_ORDERS, 3000] as readonly number[],
+  stops: [0, 1000, 2000, CAP_REACHED_AT_ORDERS, 5000] as readonly number[],
 } as const;
 
 /** Whole orders between 0 and `max`. Anything that isn't a number counts as 0. */
